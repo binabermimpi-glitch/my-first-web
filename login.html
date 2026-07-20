@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Login | Hanguk Step</title>
+
+  <!-- 기존 style.css를 로그인 페이지에서도 사용 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-body">
+
+  <!-- 로그인 페이지 헤더 -->
+  <header class="auth-header">
+
+    <!-- 누르면 메인 페이지로 돌아감 -->
+    <a href="index.html" class="auth-logo">
+      <span class="brand-mark" aria-hidden="true">
+        <i></i>
+        <b>한</b>
+      </span>
+
+      <span>
+        <strong>Hanguk Step</strong>
+        <small>Korean, one step at a time</small>
+      </span>
+    </a>
+
+    <a href="index.html" class="back-link">
+      ← Kembali
+    </a>
+
+  </header>
+
+  <main class="auth-main">
+
+    <section class="auth-card">
+
+      <p class="auth-label">SELAMAT DATANG</p>
+
+      <h1 id="authTitle">Login</h1>
+
+      <p class="auth-description" id="authDescription">
+        Masuk untuk melanjutkan pembelajaranmu.
+      </p>
+
+      <!-- 로그인과 회원가입을 바꾸는 탭 -->
+      <div class="auth-tabs">
+
+        <button
+          class="auth-tab is-active"
+          id="loginTab"
+          type="button"
+        >
+          Login
+        </button>
+
+        <button
+          class="auth-tab"
+          id="signupTab"
+          type="button"
+        >
+          Daftar
+        </button>
+
+      </div>
+
+      <!-- 로그인 입력창 -->
+      <form id="loginForm" class="auth-form">
+
+        <label for="loginEmail">
+          Email
+        </label>
+
+        <input
+          id="loginEmail"
+          type="email"
+          placeholder="contoh@email.com"
+          required
+        >
+
+        <label for="loginPassword">
+          Kata sandi
+        </label>
+
+        <input
+          id="loginPassword"
+          type="password"
+          placeholder="Masukkan kata sandi"
+          required
+        >
+
+        <button class="button auth-submit" type="submit">
+          Login
+        </button>
+
+      </form>
+
+      <!-- 회원가입 입력창 -->
+      <form id="signupForm" class="auth-form hidden">
+
+        <label for="signupName">
+          Nama
+        </label>
+
+        <input
+          id="signupName"
+          type="text"
+          placeholder="Masukkan nama"
+          required
+        >
+
+        <label for="signupEmail">
+          Email
+        </label>
+
+        <input
+          id="signupEmail"
+          type="email"
+          placeholder="contoh@email.com"
+          required
+        >
+
+        <label for="signupPassword">
+          Kata sandi
+        </label>
+
+        <input
+          id="signupPassword"
+          type="password"
+          placeholder="Minimal 8 karakter"
+          minlength="8"
+          required
+        >
+
+        <label for="signupPasswordCheck">
+          Konfirmasi kata sandi
+        </label>
+
+        <input
+          id="signupPasswordCheck"
+          type="password"
+          placeholder="Masukkan kembali kata sandi"
+          minlength="8"
+          required
+        >
+
+        <button class="button auth-submit" type="submit">
+          Daftar
+        </button>
+
+      </form>
+
+      <p class="auth-notice">
+        Login sebenarnya akan dihubungkan ke backend nanti.
+      </p>
+
+    </section>
+
+  </main>
+
+  <!-- 로그인 페이지 전용 JavaScript -->
+  <script src="login.js"></script>
+
+</body>
+</html>

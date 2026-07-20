@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Program belajar bahasa Korea selama 40 hari untuk penutur bahasa Indonesia.">
+  <title>Hanguk Step — Korean, one step at a time</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 헤더: 데스크톱 메뉴와 모바일 햄버거 메뉴 -->
+  <header class="site-header" id="beranda">
+    <div class="container nav-wrap">
+      <a class="brand" href="#beranda" aria-label="Hanguk Step, kembali ke beranda">
+        <span class="brand-mark" aria-hidden="true"><i></i><b>한</b></span>
+        <span><strong>Hanguk Step</strong><small>Korean, one step at a time</small></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <nav class="main-nav" aria-label="Navigasi utama">
+ <!-- 다른 HTML 페이지로 이동하는 로그인 메뉴 -->
+        <a href="login.html" class="login-link">Login</a>
+        <a href="#beranda">Beranda</a>
+        <a href="#kurikulum">Kurikulum</a>
+        <a href="#belajar">Belajar</a>
+        <a href="#review">Review</a>
+        <button class="button button-small start-day-one" type="button">Mulai Belajar</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 히어로: 서비스의 핵심 가치와 Day 1 시작 버튼 -->
+    <section class="hero section-pad">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span>✦</span> Belajar bahasa Korea dengan cara yang lebih terarah</p>
+          <h1>Belajar bahasa Korea,<br><em>satu langkah</em> setiap hari.</h1>
+          <p class="hero-description">Pelajari <strong>400 kosakata Korea</strong> melalui program 40 hari yang dilengkapi contoh kalimat, audio, latihan berbicara, dan review.</p>
+          <div class="hero-actions">
+            <button class="button start-day-one" type="button">Mulai Day 1 <span>→</span></button>
+            <a class="button button-ghost" href="#kurikulum">Lihat Kurikulum</a>
+          </div>
+          <div class="trust-row"><span>✓ Gratis untuk belajar</span><span>✓ Progres tersimpan</span></div>
+        </div>
+        <div class="hero-visual reveal" aria-label="Contoh kartu kosakata Korea">
+          <span class="float-tag tag-today">오늘의 단어</span><span class="float-tag tag-level">🇰🇷 Level Pemula</span>
+          <article class="demo-card">
+            <div class="demo-top"><span class="day-pill">DAY 1</span><span class="tiny-progress">1 / 10</span></div>
+            <p class="demo-label">KOSAKATA HARI INI</p><h2>안녕하세요</h2><p class="demo-meaning">Halo</p>
+            <p class="demo-romanization" hidden>annyeonghaseyo</p>
+            <div class="demo-actions"><button type="button" class="icon-button demo-audio" aria-label="Dengarkan kata 안녕하세요">🔊 <span>Dengarkan</span></button><button type="button" class="text-button demo-pronunciation">Lihat pelafalan</button></div>
+            <div class="progress-track"><span style="width:10%"></span></div>
+          </article>
+          <span class="decor decor-one">가</span><span class="decor decor-two">A</span><span class="decor decor-three">✦</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 숫자로 전체 과정의 구성을 빠르게 보여주는 통계 -->
+    <section class="stats-section" aria-label="Statistik program">
+      <div class="container stats-grid reveal">
+        <article><strong>400</strong><span>Kosakata</span></article><article><strong>32</strong><span>Hari Belajar</span></article><article><strong>8</strong><span>Hari Review</span></article><article><strong>40</strong><span>Hari Program</span></article>
+      </div>
+    </section>
+
+    <!-- 40일 커리큘럼: JavaScript가 5일 단위 모듈을 자동 생성 -->
+    <section class="curriculum section-pad" id="kurikulum">
+      <div class="container"><div class="section-heading reveal"><div><p class="eyebrow">KURIKULUM LENGKAP</p><h2>Kurikulum 40 Hari</h2></div><p>Belajar empat hari, lalu kuatkan ingatanmu lewat satu hari review.</p></div><div class="modules-grid" id="modulesGrid"></div></div>
+    </section>
+
+    <!-- 실제 학습 화면: 완성 단계에서 선택한 Day의 콘텐츠가 이곳에 표시됨 -->
+    <section class="learning-section section-pad" id="belajar">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><p class="eyebrow">RUANG BELAJAR</p>
+            <h2>Mulai langkah pertamamu</h2>
+          </div><p>Pilih Day pada kurikulum untuk membuka materi.
+            <br><b>Progres seluruh kursus: 
+              <span data-overall-progress>0%</span>
+            </b></p>
+        </div>
+        <div class="learning-shell reveal"><aside class="day-sidebar"><h3>40 Hari</h3><div id="daySidebar"></div></aside><div class="learning-main" id="learningMain"><div class="empty-state"><span>가</span><h3>Pilih Day untuk mulai belajar</h3><p>Kosakata, kalimat, audio, latihan berbicara, dan kuis akan muncul di sini.</p><button type="button" class="button start-day-one">Buka Day 1</button></div></div></div></div>
+    </section>
+
+    <section class="review-banner section-pad" id="review"><div class="container review-inner reveal"><div><span class="review-icon">📝</span><p class="eyebrow">SETIAP 5 HARI</p><h2>Review agar tidak cepat lupa.</h2><p>Kerjakan 15 soal bertahap dari empat hari sebelumnya dan ulangi hanya jawaban yang masih salah.</p></div><button type="button" class="button button-coral" id="openFirstReview">Coba Review Day 5 <span>→</span></button></div></section>
+  </main>
+
+  <footer><div class="container"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><b>한</b></span><span><strong>Hanguk Step</strong><small>Korean, one step at a time</small></span></div><p>Belajar sedikit setiap hari, bertumbuh selangkah demi selangkah.</p><span>© 2026 Hanguk Step</span></div></footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
