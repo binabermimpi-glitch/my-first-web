@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /* =========================================================
    1. 40일 학습 데이터
@@ -7,38 +7,262 @@
 const REVIEW_DAYS = new Set([5, 10, 15, 20, 25, 30, 35, 40]);
 
 const lessonMeta = {
-  1: ['Salam dan Perkenalan', '인사와 자기소개', 'Pelajari salam dan cara memperkenalkan diri.', '👋', '저는 ___입니다', 'Saya adalah ___.'],
-  2: ['Hubungan dan Pekerjaan', '기본 관계와 직업', 'Kenali hubungan dekat dan pekerjaan dasar.', '🧑‍🤝‍🧑', '___은/는 ___입니다', '___ adalah ___.'],
-  3: ['Ungkapan Salam', '기본 인사 표현', 'Gunakan ungkapan sopan dalam pertemuan sehari-hari.', '🙇', '감사합니다 / 죄송합니다', 'Terima kasih / Maaf.'],
-  4: ['Pertanyaan Dasar', '기본 질문', 'Belajar kata tanya yang paling sering digunakan.', '❓', '___이/가 무엇입니까?', 'Apa ___?'],
-  6: ['Angka Korea Asli', '고유어 숫자', 'Hitung satu sampai sepuluh dengan angka Korea asli.', '🔢', '___개 주세요', 'Tolong beri ___ buah.'],
-  7: ['Keluarga', '가족', 'Perkenalkan anggota keluarga dengan tepat.', '🏠', '저의 ___입니다', 'Ini ___ saya.'],
-  8: ['Makanan', '음식', 'Kenali makanan dan minuman yang umum.', '🍚', '___을/를 먹어요', 'Saya makan ___.'],
-  9: ['Makan dan Rasa', '식사 동작과 맛', 'Jelaskan aktivitas makan dan rasa makanan.', '😋', '___이/가 맛있어요', '___ enak.'],
-  11: ['Sekolah dan Belajar', '학교와 공부', 'Pelajari benda dan kegiatan penting di sekolah.', '📚', '___에서 공부해요', 'Saya belajar di ___.'],
-  12: ['Rumah', '집', 'Sebutkan ruangan dan benda di dalam rumah.', '🛋️', '___에 있어요', 'Ada di ___.'],
-  13: ['Tanggal dan Waktu', '날짜와 시간', 'Bicarakan waktu dan kegiatan harian.', '🕐', '지금 ___시입니다', 'Sekarang pukul ___.'],
-  14: ['Hari dan Kebiasaan', '요일과 주기', 'Pelajari nama hari dan frekuensi dasar.', '📅', '___요일에 만나요', 'Mari bertemu hari ___.'],
-  16: ['Tempat', '장소', 'Kenali tempat yang sering dikunjungi.', '📍', '___에 가요', 'Saya pergi ke ___.'],
-  17: ['Transportasi', '교통', 'Gunakan kosakata perjalanan dan kendaraan.', '🚌', '___을/를 타요', 'Saya naik ___.'],
-  18: ['Aktivitas Dasar', '기본 동작', 'Pelajari kata kerja untuk rutinitas sehari-hari.', '🏃', '___을/를 해요', 'Saya melakukan ___.'],
-  19: ['Keadaan Dasar', '기본 상태', 'Bandingkan ukuran, jumlah, kecepatan, dan tingkat kesulitan.', '⚖️', '___이/가 커요', '___ besar.'],
-  21: ['Di Restoran', '식당 이용', 'Pesan makanan dan lakukan pembayaran di restoran.', '🍽️', '___ 주세요', 'Tolong beri ___.'],
-  22: ['Berbelanja', '쇼핑', 'Tanyakan harga, ukuran, dan lakukan pembayaran.', '🛍️', '이거 얼마예요?', 'Berapa harga ini?'],
-  23: ['Pakaian dan Barang', '옷과 소지품', 'Bicarakan pakaian dan barang yang dibawa.', '👕', '___을/를 입어요', 'Saya memakai ___.'],
-  24: ['Cuaca dan Musim', '날씨와 계절', 'Jelaskan cuaca dan empat musim di Korea.', '🌤️', '오늘은 ___', 'Hari ini ___.'],
-  26: ['Tubuh', '몸', 'Pelajari bagian tubuh yang penting.', '🧍', '___이/가 아파요', '___ saya sakit.'],
-  27: ['Kesehatan dan Rumah Sakit', '건강과 병원', 'Jelaskan gejala dan kebutuhan medis dasar.', '🏥', '___이/가 아파요', 'Saya sakit ___.'],
-  28: ['Perasaan', '감정', 'Ungkapkan emosi dan keadaan perasaan.', '😊', '저는 ___', 'Saya merasa ___.'],
-  29: ['Hobi dan Waktu Luang', '취미와 여가', 'Ceritakan kegiatan favorit pada waktu luang.', '⚽', '취미는 ___입니다', 'Hobi saya adalah ___.'],
-  31: ['Kehidupan Kantor', '회사 생활', 'Gunakan kosakata penting dalam lingkungan kerja.', '💼', '___ 때문에 바빠요', 'Saya sibuk karena ___.'],
-  32: ['Kehidupan Sekolah', '학교생활', 'Bicarakan pelajaran, tugas, dan proses belajar.', '🎓', '___을/를 이해해요', 'Saya memahami ___.'],
-  33: ['Mencari Jalan', '길 찾기', 'Tanyakan lokasi dan pahami arah dengan mudah.', '🧭', '___에 있어요', 'Ada di ___.'],
-  34: ['Perjalanan dan Lalu Lintas', '이동과 교통 표현', 'Jelaskan perjalanan dan kondisi lalu lintas.', '🚦', '___에서 내려요', 'Saya turun di ___.'],
-  36: ['Janji dan Rencana', '약속과 계획', 'Atur jadwal, undangan, dan rencana bersama.', '🗓️', '___기로 했어요', 'Saya memutuskan untuk ___.'],
-  37: ['Aktivitas Sehari-hari', '생활 동작', 'Jelaskan urutan kegiatan di rumah.', '🧹', '___고 나서 ___', 'Setelah ___, saya ___.'],
-  38: ['Komunikasi', '의사소통', 'Minta bantuan dan sampaikan pendapat dengan sopan.', '💬', '___다고 생각해요', 'Saya pikir ___.'],
-  39: ['Frekuensi dan Tingkat', '빈도와 정도', 'Buat kalimat lebih alami dengan kata keterangan.', '📊', '___ 자주 해요', 'Saya sering ___.']
+  1: [
+    "Salam dan Perkenalan",
+    "인사와 자기소개",
+    "Pelajari salam dan cara memperkenalkan diri.",
+    "👋",
+    "저는 ___입니다",
+    "Saya adalah ___.",
+  ],
+  2: [
+    "Hubungan dan Pekerjaan",
+    "기본 관계와 직업",
+    "Kenali hubungan dekat dan pekerjaan dasar.",
+    "🧑‍🤝‍🧑",
+    "___은/는 ___입니다",
+    "___ adalah ___.",
+  ],
+  3: [
+    "Ungkapan Salam",
+    "기본 인사 표현",
+    "Gunakan ungkapan sopan dalam pertemuan sehari-hari.",
+    "🙇",
+    "감사합니다 / 죄송합니다",
+    "Terima kasih / Maaf.",
+  ],
+  4: [
+    "Pertanyaan Dasar",
+    "기본 질문",
+    "Belajar kata tanya yang paling sering digunakan.",
+    "❓",
+    "___이/가 무엇입니까?",
+    "Apa ___?",
+  ],
+  6: [
+    "Angka Korea Asli",
+    "고유어 숫자",
+    "Hitung satu sampai sepuluh dengan angka Korea asli.",
+    "🔢",
+    "___개 주세요",
+    "Tolong beri ___ buah.",
+  ],
+  7: [
+    "Keluarga",
+    "가족",
+    "Perkenalkan anggota keluarga dengan tepat.",
+    "🏠",
+    "저의 ___입니다",
+    "Ini ___ saya.",
+  ],
+  8: [
+    "Makanan",
+    "음식",
+    "Kenali makanan dan minuman yang umum.",
+    "🍚",
+    "___을/를 먹어요",
+    "Saya makan ___.",
+  ],
+  9: [
+    "Makan dan Rasa",
+    "식사 동작과 맛",
+    "Jelaskan aktivitas makan dan rasa makanan.",
+    "😋",
+    "___이/가 맛있어요",
+    "___ enak.",
+  ],
+  11: [
+    "Sekolah dan Belajar",
+    "학교와 공부",
+    "Pelajari benda dan kegiatan penting di sekolah.",
+    "📚",
+    "___에서 공부해요",
+    "Saya belajar di ___.",
+  ],
+  12: [
+    "Rumah",
+    "집",
+    "Sebutkan ruangan dan benda di dalam rumah.",
+    "🛋️",
+    "___에 있어요",
+    "Ada di ___.",
+  ],
+  13: [
+    "Tanggal dan Waktu",
+    "날짜와 시간",
+    "Bicarakan waktu dan kegiatan harian.",
+    "🕐",
+    "지금 ___시입니다",
+    "Sekarang pukul ___.",
+  ],
+  14: [
+    "Hari dan Kebiasaan",
+    "요일과 주기",
+    "Pelajari nama hari dan frekuensi dasar.",
+    "📅",
+    "___요일에 만나요",
+    "Mari bertemu hari ___.",
+  ],
+  16: [
+    "Tempat",
+    "장소",
+    "Kenali tempat yang sering dikunjungi.",
+    "📍",
+    "___에 가요",
+    "Saya pergi ke ___.",
+  ],
+  17: [
+    "Transportasi",
+    "교통",
+    "Gunakan kosakata perjalanan dan kendaraan.",
+    "🚌",
+    "___을/를 타요",
+    "Saya naik ___.",
+  ],
+  18: [
+    "Aktivitas Dasar",
+    "기본 동작",
+    "Pelajari kata kerja untuk rutinitas sehari-hari.",
+    "🏃",
+    "___을/를 해요",
+    "Saya melakukan ___.",
+  ],
+  19: [
+    "Keadaan Dasar",
+    "기본 상태",
+    "Bandingkan ukuran, jumlah, kecepatan, dan tingkat kesulitan.",
+    "⚖️",
+    "___이/가 커요",
+    "___ besar.",
+  ],
+  21: [
+    "Di Restoran",
+    "식당 이용",
+    "Pesan makanan dan lakukan pembayaran di restoran.",
+    "🍽️",
+    "___ 주세요",
+    "Tolong beri ___.",
+  ],
+  22: [
+    "Berbelanja",
+    "쇼핑",
+    "Tanyakan harga, ukuran, dan lakukan pembayaran.",
+    "🛍️",
+    "이거 얼마예요?",
+    "Berapa harga ini?",
+  ],
+  23: [
+    "Pakaian dan Barang",
+    "옷과 소지품",
+    "Bicarakan pakaian dan barang yang dibawa.",
+    "👕",
+    "___을/를 입어요",
+    "Saya memakai ___.",
+  ],
+  24: [
+    "Cuaca dan Musim",
+    "날씨와 계절",
+    "Jelaskan cuaca dan empat musim di Korea.",
+    "🌤️",
+    "오늘은 ___",
+    "Hari ini ___.",
+  ],
+  26: [
+    "Tubuh",
+    "몸",
+    "Pelajari bagian tubuh yang penting.",
+    "🧍",
+    "___이/가 아파요",
+    "___ saya sakit.",
+  ],
+  27: [
+    "Kesehatan dan Rumah Sakit",
+    "건강과 병원",
+    "Jelaskan gejala dan kebutuhan medis dasar.",
+    "🏥",
+    "___이/가 아파요",
+    "Saya sakit ___.",
+  ],
+  28: [
+    "Perasaan",
+    "감정",
+    "Ungkapkan emosi dan keadaan perasaan.",
+    "😊",
+    "저는 ___",
+    "Saya merasa ___.",
+  ],
+  29: [
+    "Hobi dan Waktu Luang",
+    "취미와 여가",
+    "Ceritakan kegiatan favorit pada waktu luang.",
+    "⚽",
+    "취미는 ___입니다",
+    "Hobi saya adalah ___.",
+  ],
+  31: [
+    "Kehidupan Kantor",
+    "회사 생활",
+    "Gunakan kosakata penting dalam lingkungan kerja.",
+    "💼",
+    "___ 때문에 바빠요",
+    "Saya sibuk karena ___.",
+  ],
+  32: [
+    "Kehidupan Sekolah",
+    "학교생활",
+    "Bicarakan pelajaran, tugas, dan proses belajar.",
+    "🎓",
+    "___을/를 이해해요",
+    "Saya memahami ___.",
+  ],
+  33: [
+    "Mencari Jalan",
+    "길 찾기",
+    "Tanyakan lokasi dan pahami arah dengan mudah.",
+    "🧭",
+    "___에 있어요",
+    "Ada di ___.",
+  ],
+  34: [
+    "Perjalanan dan Lalu Lintas",
+    "이동과 교통 표현",
+    "Jelaskan perjalanan dan kondisi lalu lintas.",
+    "🚦",
+    "___에서 내려요",
+    "Saya turun di ___.",
+  ],
+  36: [
+    "Janji dan Rencana",
+    "약속과 계획",
+    "Atur jadwal, undangan, dan rencana bersama.",
+    "🗓️",
+    "___기로 했어요",
+    "Saya memutuskan untuk ___.",
+  ],
+  37: [
+    "Aktivitas Sehari-hari",
+    "생활 동작",
+    "Jelaskan urutan kegiatan di rumah.",
+    "🧹",
+    "___고 나서 ___",
+    "Setelah ___, saya ___.",
+  ],
+  38: [
+    "Komunikasi",
+    "의사소통",
+    "Minta bantuan dan sampaikan pendapat dengan sopan.",
+    "💬",
+    "___다고 생각해요",
+    "Saya pikir ___.",
+  ],
+  39: [
+    "Frekuensi dan Tingkat",
+    "빈도와 정도",
+    "Buat kalimat lebih alami dengan kata keterangan.",
+    "📊",
+    "___ 자주 해요",
+    "Saya sering ___.",
+  ],
 };
 
 // 각 줄은 “한국어|인도네시아어” 형식이다. 총 400개가 들어 있다.
@@ -442,7 +666,7 @@ const vocabularyRows = {
 아주|sangat
 너무|terlalu / sangat
 거의|hampir
-꼭|pasti / harus`
+꼭|pasti / harus`,
 };
 
 // 각 학습일에는 해당 날짜의 단어를 활용한 예문이 정확히 5개씩 있다.
@@ -606,17 +830,88 @@ const sentenceRows = {
 보통 주말에 쉬지만 가끔 일해요.|Biasanya saya beristirahat pada akhir pekan, tetapi kadang-kadang bekerja.
 아직 숙제를 끝내지 못했는데 친구는 벌써 끝냈어요.|Saya belum menyelesaikan tugas, tetapi teman saya sudah selesai.
 먼저 단어를 읽고 나중에 다시 써 보세요.|Baca kosakata terlebih dahulu, lalu coba tulis lagi nanti.
-한국어가 아주 어렵지만 꼭 잘하고 싶어요.|Bahasa Korea sangat sulit, tetapi saya benar-benar ingin mahir.`
+한국어가 아주 어렵지만 꼭 잘하고 싶어요.|Bahasa Korea sangat sulit, tetapi saya benar-benar ingin mahir.`,
 };
 
 /* 한글 음절을 기본 로마자로 바꾸는 함수이다. 음성은 로마자가 아니라 한국어 원문을 읽는다. */
 function romanizeKorean(text) {
-  const initials = ['g','kk','n','d','tt','r','m','b','pp','s','ss','','j','jj','ch','k','t','p','h'];
-  const vowels = ['a','ae','ya','yae','eo','e','yeo','ye','o','wa','wae','oe','yo','u','wo','we','wi','yu','eu','ui','i'];
-  const finals = ['', 'k','k','ks','n','nj','nh','t','l','lk','lm','lb','ls','lt','lp','lh','m','p','ps','t','t','ng','t','t','k','t','p','h'];
-  let result = '';
+  const initials = [
+    "g",
+    "kk",
+    "n",
+    "d",
+    "tt",
+    "r",
+    "m",
+    "b",
+    "pp",
+    "s",
+    "ss",
+    "",
+    "j",
+    "jj",
+    "ch",
+    "k",
+    "t",
+    "p",
+    "h",
+  ];
+  const vowels = [
+    "a",
+    "ae",
+    "ya",
+    "yae",
+    "eo",
+    "e",
+    "yeo",
+    "ye",
+    "o",
+    "wa",
+    "wae",
+    "oe",
+    "yo",
+    "u",
+    "wo",
+    "we",
+    "wi",
+    "yu",
+    "eu",
+    "ui",
+    "i",
+  ];
+  const finals = [
+    "",
+    "k",
+    "k",
+    "ks",
+    "n",
+    "nj",
+    "nh",
+    "t",
+    "l",
+    "lk",
+    "lm",
+    "lb",
+    "ls",
+    "lt",
+    "lp",
+    "lh",
+    "m",
+    "p",
+    "ps",
+    "t",
+    "t",
+    "ng",
+    "t",
+    "t",
+    "k",
+    "t",
+    "p",
+    "h",
+  ];
+  let result = "";
   for (const char of text) {
-    const code = char.charCodeAt(0) - 0xAC00;
+    const code = char.charCodeAt(0) - 0xac00;
     if (code >= 0 && code <= 11171) {
       const initial = Math.floor(code / 588);
       const vowel = Math.floor((code % 588) / 28);
@@ -626,20 +921,89 @@ function romanizeKorean(text) {
       result += char;
     }
   }
-  return result.toLowerCase()
-    .replace(/ipnida/g, 'imnida').replace(/hapnida/g, 'hamnida')
-    .replace(/seupnida/g, 'seumnida').replace(/\s+/g, ' ').trim();
+  return result
+    .toLowerCase()
+    .replace(/ipnida/g, "imnida")
+    .replace(/hapnida/g, "hamnida")
+    .replace(/seupnida/g, "seumnida")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function inferPartOfSpeech(korean, day) {
-  if (day === 39 || ['더','조금','매일','자주','지금'].includes(korean)) return '부사';
-  if (korean.endsWith('다')) return ['좋다','나쁘다','크다','작다','많다','적다','빠르다','느리다','쉽다','어렵다','비싸다','싸다','덥다','춥다','따뜻하다','시원하다','맑다','흐리다','아프다','기쁘다','슬프다','무섭다','피곤하다','심심하다','재미있다','재미없다','부끄럽다','편하다','불편하다','바쁘다','멀다','가깝다','가능하다','늦다','괜찮다','맛있다','맛없다','맵다','달다','짜다','뜨겁다','차갑다','배고프다'].includes(korean) ? '형용사' : '동사';
-  if (['안녕하세요','감사합니다','죄송합니다','괜찮아요','반갑습니다','네','아니요','안녕히 가세요','안녕히 계세요','주세요'].includes(korean)) return '표현';
-  return '명사';
+  if (day === 39 || ["더", "조금", "매일", "자주", "지금"].includes(korean))
+    return "부사";
+  if (korean.endsWith("다"))
+    return [
+      "좋다",
+      "나쁘다",
+      "크다",
+      "작다",
+      "많다",
+      "적다",
+      "빠르다",
+      "느리다",
+      "쉽다",
+      "어렵다",
+      "비싸다",
+      "싸다",
+      "덥다",
+      "춥다",
+      "따뜻하다",
+      "시원하다",
+      "맑다",
+      "흐리다",
+      "아프다",
+      "기쁘다",
+      "슬프다",
+      "무섭다",
+      "피곤하다",
+      "심심하다",
+      "재미있다",
+      "재미없다",
+      "부끄럽다",
+      "편하다",
+      "불편하다",
+      "바쁘다",
+      "멀다",
+      "가깝다",
+      "가능하다",
+      "늦다",
+      "괜찮다",
+      "맛있다",
+      "맛없다",
+      "맵다",
+      "달다",
+      "짜다",
+      "뜨겁다",
+      "차갑다",
+      "배고프다",
+    ].includes(korean)
+      ? "형용사"
+      : "동사";
+  if (
+    [
+      "안녕하세요",
+      "감사합니다",
+      "죄송합니다",
+      "괜찮아요",
+      "반갑습니다",
+      "네",
+      "아니요",
+      "안녕히 가세요",
+      "안녕히 계세요",
+      "주세요",
+    ].includes(korean)
+  )
+    return "표현";
+  return "명사";
 }
 
 function parseRows(text) {
-  return text.trim().split('\n').map(row => row.split('|').map(value => value.trim()));
+  return text
+    .trim()
+    .split("\n")
+    .map((row) => row.split("|").map((value) => value.trim()));
 }
 
 // 원본을 courseData 배열로 변환한다. 화면은 오직 이 배열을 기준으로 그린다.
@@ -648,258 +1012,399 @@ let vocabularyId = 1;
 for (let day = 1; day <= 40; day++) {
   if (REVIEW_DAYS.has(day)) {
     courseData.push({
-      day, type: 'review', title: day === 40 ? 'Review Terakhir' : `Review Day ${day - 4}–${day - 1}`,
-      koreanTitle: day === 40 ? '최종 복습' : `Day ${day - 4}~${day - 1} 복습`,
-      description: `Ulangi kosakata dari Day ${day - 4} sampai Day ${day - 1}.`, emoji: '📝', level: 'Review',
-      reviewDays: [day - 4, day - 3, day - 2, day - 1]
+      day,
+      type: "review",
+      title:
+        day === 40 ? "Review Terakhir" : `Review Day ${day - 4}–${day - 1}`,
+      koreanTitle: day === 40 ? "최종 복습" : `Day ${day - 4}~${day - 1} 복습`,
+      description: `Ulangi kosakata dari Day ${day - 4} sampai Day ${day - 1}.`,
+      emoji: "📝",
+      level: "Review",
+      reviewDays: [day - 4, day - 3, day - 2, day - 1],
     });
     continue;
   }
   const meta = lessonMeta[day];
-  const vocabulary = parseRows(vocabularyRows[day]).map(([korean, indonesian]) => {
-    const meaningNumber = day === 24 && korean === '눈' ? 2 : day === 26 && korean === '눈' ? 1 : 1;
-    return { id: vocabularyId++, day, korean, indonesian, romanization: romanizeKorean(korean), partOfSpeech: inferPartOfSpeech(korean, day), category: meta[1], meaningNumber, audioText: korean };
+  const vocabulary = parseRows(vocabularyRows[day]).map(
+    ([korean, indonesian]) => {
+      const meaningNumber =
+        day === 24 && korean === "눈"
+          ? 2
+          : day === 26 && korean === "눈"
+            ? 1
+            : 1;
+      return {
+        id: vocabularyId++,
+        day,
+        korean,
+        indonesian,
+        romanization: romanizeKorean(korean),
+        partOfSpeech: inferPartOfSpeech(korean, day),
+        category: meta[1],
+        meaningNumber,
+        audioText: korean,
+      };
+    },
+  );
+  const sentences = parseRows(sentenceRows[day]).map(
+    ([korean, indonesian], index) => ({
+      id: `${day}-${index + 1}`,
+      korean,
+      indonesian,
+      romanization: romanizeKorean(korean),
+      audioText: korean,
+    }),
+  );
+  courseData.push({
+    day,
+    type: "lesson",
+    title: meta[0],
+    koreanTitle: meta[1],
+    description: meta[2],
+    emoji: meta[3],
+    level: day <= 20 ? "Pemula" : "Pemula–Menengah",
+    grammar: meta[4],
+    grammarMeaning: meta[5],
+    vocabulary,
+    sentences,
   });
-  const sentences = parseRows(sentenceRows[day]).map(([korean, indonesian], index) => ({ id: `${day}-${index + 1}`, korean, indonesian, romanization: romanizeKorean(korean), audioText: korean }));
-  courseData.push({ day, type: 'lesson', title: meta[0], koreanTitle: meta[1], description: meta[2], emoji: meta[3], level: day <= 20 ? 'Pemula' : 'Pemula–Menengah', grammar: meta[4], grammarMeaning: meta[5], vocabulary, sentences });
 }
 
 /* =========================================================
    2. 학습 기록과 공통 상태
 ========================================================= */
-const STORAGE_KEY = 'hangukStepProgressV1';
+const STORAGE_KEY = "hangukStepProgressV1";
 let savedProgress = loadProgress();
 let currentDay = 1;
-let activeTab = 'vocabulary';
+let activeTab = "vocabulary";
 let speakingIndex = 0;
 let quizRuntime = null;
 let mediaRecorder = null;
 let recordedChunks = [];
-let recordedAudioUrl = '';
+let recordedAudioUrl = "";
 
 function loadProgress() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
-  catch (error) { return {}; }
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+  } catch (error) {
+    return {};
+  }
 }
 
 function saveProgress() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(savedProgress)); }
-  catch (error) { showToast('Progres belum dapat disimpan di browser ini.'); }
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(savedProgress));
+  } catch (error) {
+    showToast("Progres belum dapat disimpan di browser ini.");
+  }
   updateAllProgressUI();
 }
 
 function getDayState(dayNumber) {
-  const lesson = courseData.find(item => item.day === dayNumber);
+  const lesson = courseData.find((item) => item.day === dayNumber);
   if (!savedProgress[dayNumber]) {
-    savedProgress[dayNumber] = lesson.type === 'lesson'
-      ? { words: [], sentences: [], checkAnswers: [], checkScore: 0, completed: false }
-      : { answers: [], wrongAnswers: [], typeScores: { A: 0, B: 0, C: 0 }, score: 0, completed: false };
+    savedProgress[dayNumber] =
+      lesson.type === "lesson"
+        ? {
+            words: [],
+            sentences: [],
+            checkAnswers: [],
+            checkScore: 0,
+            completed: false,
+          }
+        : {
+            answers: [],
+            wrongAnswers: [],
+            typeScores: { A: 0, B: 0, C: 0 },
+            score: 0,
+            completed: false,
+          };
   }
   return savedProgress[dayNumber];
 }
 
 function getDayProgress(lesson) {
   const state = getDayState(lesson.day);
-  if (lesson.type === 'review') {
+  if (lesson.type === "review") {
     if (state.completed) return 100;
     return Math.round((state.answers.length / 15) * 100);
   }
-  return Math.round(((state.words.length + state.sentences.length) / (lesson.vocabulary.length + lesson.sentences.length)) * 100);
+  return Math.round(
+    ((state.words.length + state.sentences.length) /
+      (lesson.vocabulary.length + lesson.sentences.length)) *
+      100,
+  );
 }
 
 function getOverallProgress() {
-  const completedDays = courseData.filter(item => getDayState(item.day).completed).length;
+  const completedDays = courseData.filter(
+    (item) => getDayState(item.day).completed,
+  ).length;
   return Math.round((completedDays / courseData.length) * 100);
 }
 
 function showToast(message) {
-  const toast = document.getElementById('toast');
+  const toast = document.getElementById("toast");
   toast.textContent = message;
-  toast.classList.add('show');
+  toast.classList.add("show");
   clearTimeout(showToast.timer);
-  showToast.timer = setTimeout(() => toast.classList.remove('show'), 2500);
+  showToast.timer = setTimeout(() => toast.classList.remove("show"), 2500);
 }
 
 /* =========================================================
    3. 헤더, 데모 카드, 커리큘럼
 ========================================================= */
-const menuToggle = document.querySelector('.menu-toggle');
-const mainNav = document.querySelector('.main-nav');
-menuToggle.addEventListener('click', () => {
-  const isOpen = mainNav.classList.toggle('is-open');
-  menuToggle.setAttribute('aria-expanded', String(isOpen));
-  menuToggle.setAttribute('aria-label', isOpen ? 'Tutup menu' : 'Buka menu');
+const menuToggle = document.querySelector(".menu-toggle");
+const mainNav = document.querySelector(".main-nav");
+menuToggle.addEventListener("click", () => {
+  const isOpen = mainNav.classList.toggle("is-open");
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute("aria-label", isOpen ? "Tutup menu" : "Buka menu");
 });
-mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-  mainNav.classList.remove('is-open'); menuToggle.setAttribute('aria-expanded', 'false');
-}));
+mainNav.querySelectorAll("a").forEach((link) =>
+  link.addEventListener("click", () => {
+    mainNav.classList.remove("is-open");
+    menuToggle.setAttribute("aria-expanded", "false");
+  }),
+);
 
-document.querySelector('.demo-pronunciation').addEventListener('click', event => {
-  const text = document.querySelector('.demo-romanization');
-  text.hidden = !text.hidden;
-  event.currentTarget.textContent = text.hidden ? 'Lihat pelafalan' : 'Sembunyikan pelafalan';
-});
-document.querySelector('.demo-audio').addEventListener('click', () => speakKorean('안녕하세요'));
+document
+  .querySelector(".demo-pronunciation")
+  .addEventListener("click", (event) => {
+    const text = document.querySelector(".demo-romanization");
+    text.hidden = !text.hidden;
+    event.currentTarget.textContent = text.hidden
+      ? "Lihat pelafalan"
+      : "Sembunyikan pelafalan";
+  });
+document
+  .querySelector(".demo-audio")
+  .addEventListener("click", () => speakKorean("안녕하세요"));
 
 // Web Speech API로 한국어 원문을 읽는다. 미지원 브라우저에서도 오류가 나지 않는다.
 function speakKorean(text, rate = 0.9) {
-  if (!('speechSynthesis' in window)) { showToast('Audio belum didukung di browser ini.'); return; }
+  if (!("speechSynthesis" in window)) {
+    showToast("Audio belum didukung di browser ini.");
+    return;
+  }
   window.speechSynthesis.cancel();
   const speech = new SpeechSynthesisUtterance();
-  speech.text = text; speech.lang = 'ko-KR'; speech.rate = rate;
+  speech.text = text;
+  speech.lang = "ko-KR";
+  speech.rate = rate;
   window.speechSynthesis.speak(speech);
 }
 
 function renderCurriculum() {
-  const modulesGrid = document.getElementById('modulesGrid');
-  modulesGrid.innerHTML = '';
+  const modulesGrid = document.getElementById("modulesGrid");
+  modulesGrid.innerHTML = "";
   for (let moduleNumber = 1; moduleNumber <= 8; moduleNumber++) {
-    const moduleLessons = courseData.slice((moduleNumber - 1) * 5, moduleNumber * 5);
-    const completed = moduleLessons.filter(item => getDayState(item.day).completed).length;
+    const moduleLessons = courseData.slice(
+      (moduleNumber - 1) * 5,
+      moduleNumber * 5,
+    );
+    const completed = moduleLessons.filter(
+      (item) => getDayState(item.day).completed,
+    ).length;
     const modulePercent = Math.round((completed / moduleLessons.length) * 100);
-    const card = document.createElement('article');
-    card.className = 'module-card visible';
+    const card = document.createElement("article");
+    card.className = "module-card visible";
     card.innerHTML = `
       <div class="module-head"><span>MODUL ${moduleNumber}</span><small>${completed} / ${moduleLessons.length} selesai</small></div>
-      <h3>${moduleNumber === 8 ? 'Langkah terakhir' : `Langkah ${moduleNumber}`}</h3>
-      <div class="module-list">${moduleLessons.map(item => {
-        const progress = getDayProgress(item); const done = getDayState(item.day).completed;
-        return `<button type="button" class="module-day-row ${item.type === 'review' ? 'is-review' : ''} ${done ? 'is-done' : ''}" data-day="${item.day}">
-          <span class="module-day-icon">${done ? '✓' : item.emoji}</span>
-          <span class="module-day-copy"><b>Day ${item.day} · ${item.koreanTitle}</b><small>${item.type === 'review' ? '15 soal review' : `${item.vocabulary.length} kosakata`} · ${progress}%</small></span>
+      <h3>${moduleNumber === 8 ? "Langkah terakhir" : `Langkah ${moduleNumber}`}</h3>
+      <div class="module-list">${moduleLessons
+        .map((item) => {
+          const progress = getDayProgress(item);
+          const done = getDayState(item.day).completed;
+          return `<button type="button" class="module-day-row ${item.type === "review" ? "is-review" : ""} ${done ? "is-done" : ""}" data-day="${item.day}">
+          <span class="module-day-icon">${done ? "✓" : item.emoji}</span>
+          <span class="module-day-copy"><b>Day ${item.day} · ${item.koreanTitle}</b><small>${item.type === "review" ? "15 soal review" : `${item.vocabulary.length} kosakata`} · ${progress}%</small></span>
           <span aria-hidden="true">›</span>
         </button>`;
-      }).join('')}</div>
+        })
+        .join("")}</div>
       <div class="module-progress"><span><i style="width:${modulePercent}%"></i></span><small>${modulePercent}%</small></div>`;
     modulesGrid.appendChild(card);
   }
 }
 
 function renderDaySidebar() {
-  document.getElementById('daySidebar').innerHTML = courseData.map(item => {
-    const done = getDayState(item.day).completed;
-    return `<button type="button" data-day="${item.day}" class="sidebar-day ${item.type === 'review' ? 'is-review' : ''} ${item.day === currentDay ? 'is-active' : ''}">
-      <span>${done ? '✓' : item.emoji}</span><b>Day ${item.day}</b><small>${item.type === 'review' ? 'Review' : item.koreanTitle}</small>
+  document.getElementById("daySidebar").innerHTML = courseData
+    .map((item) => {
+      const done = getDayState(item.day).completed;
+      return `<button type="button" data-day="${item.day}" class="sidebar-day ${item.type === "review" ? "is-review" : ""} ${item.day === currentDay ? "is-active" : ""}">
+      <span>${done ? "✓" : item.emoji}</span><b>Day ${item.day}</b><small>${item.type === "review" ? "Review" : item.koreanTitle}</small>
     </button>`;
-  }).join('');
+    })
+    .join("");
 }
 
 function updateAllProgressUI() {
-  renderCurriculum(); renderDaySidebar();
+  renderCurriculum();
+  renderDaySidebar();
   const percent = getOverallProgress();
-  document.querySelectorAll('[data-overall-progress]').forEach(element => element.textContent = `${percent}%`);
+  document
+    .querySelectorAll("[data-overall-progress]")
+    .forEach((element) => (element.textContent = `${percent}%`));
 }
 
 /* =========================================================
    4. Day 선택과 일반 학습 화면
 ========================================================= */
 function openDay(dayNumber, shouldScroll = true) {
-  currentDay = dayNumber; activeTab = courseData.find(item => item.day === dayNumber).type === 'review' ? 'review' : 'vocabulary';
-  quizRuntime = null; speakingIndex = 0;
-  renderDaySidebar(); renderLearningDay();
-  if (shouldScroll) document.getElementById('belajar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  currentDay = dayNumber;
+  activeTab =
+    courseData.find((item) => item.day === dayNumber).type === "review"
+      ? "review"
+      : "vocabulary";
+  quizRuntime = null;
+  speakingIndex = 0;
+  renderDaySidebar();
+  renderLearningDay();
+  if (shouldScroll)
+    document
+      .getElementById("belajar")
+      .scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function renderLearningDay() {
-  const lesson = courseData.find(item => item.day === currentDay);
+  const lesson = courseData.find((item) => item.day === currentDay);
   const state = getDayState(currentDay);
   const progress = getDayProgress(lesson);
-  const tabButtons = lesson.type === 'lesson' ? `
+  const tabButtons =
+    lesson.type === "lesson"
+      ? `
     <div class="lesson-tabs" role="tablist" aria-label="Tahap belajar">
-      <button type="button" role="tab" data-tab="vocabulary" class="${activeTab === 'vocabulary' ? 'is-active' : ''}">01 Kosakata</button>
-      <button type="button" role="tab" data-tab="sentences" class="${activeTab === 'sentences' ? 'is-active' : ''}">02 Kalimat</button>
-      <button type="button" role="tab" data-tab="speaking" class="${activeTab === 'speaking' ? 'is-active' : ''}">03 Berbicara</button>
-      <button type="button" role="tab" data-tab="quick" class="${activeTab === 'quick' ? 'is-active' : ''}">04 Cek Cepat</button>
-    </div>` : '';
-  document.getElementById('learningMain').innerHTML = `
-    <div class="lesson-hero ${lesson.type === 'review' ? 'review-hero' : ''}">
-      <div class="lesson-title-row"><span class="lesson-emoji">${lesson.emoji}</span><div><div class="lesson-badges"><span>DAY ${lesson.day}</span><span>${lesson.level}</span>${lesson.type === 'review' ? '<span class="review-badge">REVIEW</span>' : ''}</div><h2>${lesson.koreanTitle}</h2><p>${lesson.title}</p></div></div>
+      <button type="button" role="tab" data-tab="vocabulary" class="${activeTab === "vocabulary" ? "is-active" : ""}">01 Kosakata</button>
+      <button type="button" role="tab" data-tab="sentences" class="${activeTab === "sentences" ? "is-active" : ""}">02 Kalimat</button>
+      <button type="button" role="tab" data-tab="speaking" class="${activeTab === "speaking" ? "is-active" : ""}">03 Berbicara</button>
+      <button type="button" role="tab" data-tab="quick" class="${activeTab === "quick" ? "is-active" : ""}">04 Cek Cepat</button>
+    </div>`
+      : "";
+  document.getElementById("learningMain").innerHTML = `
+    <div class="lesson-hero ${lesson.type === "review" ? "review-hero" : ""}">
+      <div class="lesson-title-row"><span class="lesson-emoji">${lesson.emoji}</span><div><div class="lesson-badges"><span>DAY ${lesson.day}</span><span>${lesson.level}</span>${lesson.type === "review" ? '<span class="review-badge">REVIEW</span>' : ""}</div><h2>${lesson.koreanTitle}</h2><p>${lesson.title}</p></div></div>
       <div class="lesson-progress-box"><strong>${progress}%</strong><span>Progres Day</span></div>
     </div>
     <p class="lesson-description">${lesson.description}</p>
-    ${lesson.type === 'lesson' ? `<div class="grammar-note"><span>문법</span><div><b>${lesson.grammar}</b><small>${lesson.grammarMeaning}</small></div></div>` : ''}
+    ${lesson.type === "lesson" ? `<div class="grammar-note"><span>문법</span><div><b>${lesson.grammar}</b><small>${lesson.grammarMeaning}</small></div></div>` : ""}
     ${tabButtons}
     <div id="tabContent" aria-live="polite"></div>`;
-  if (lesson.type === 'review') renderReviewIntro(lesson);
+  if (lesson.type === "review") renderReviewIntro(lesson);
   else renderLessonTab();
 }
 
 function renderLessonTab() {
-  const lesson = courseData.find(item => item.day === currentDay);
-  if (activeTab === 'vocabulary') renderVocabulary(lesson);
-  if (activeTab === 'sentences') renderSentences(lesson);
-  if (activeTab === 'speaking') renderSpeaking(lesson);
-  if (activeTab === 'quick') renderQuickCheck(lesson);
+  const lesson = courseData.find((item) => item.day === currentDay);
+  if (activeTab === "vocabulary") renderVocabulary(lesson);
+  if (activeTab === "sentences") renderSentences(lesson);
+  if (activeTab === "speaking") renderSpeaking(lesson);
+  if (activeTab === "quick") renderQuickCheck(lesson);
 }
 
 function renderVocabulary(lesson) {
   const state = getDayState(lesson.day);
-  document.getElementById('tabContent').innerHTML = `
+  document.getElementById("tabContent").innerHTML = `
     <div class="tab-intro"><div><span>LANGKAH 1</span><h3>Pelajari ${lesson.vocabulary.length} kosakata</h3></div><p>Tekan audio, lihat pelafalan jika perlu, lalu tandai kata yang sudah kamu pelajari.</p></div>
-    <div class="vocabulary-grid">${lesson.vocabulary.map(word => {
-      const done = state.words.includes(word.id);
-      return `<article class="word-card ${done ? 'is-learned' : ''}" data-word-card="${word.id}">
+    <div class="vocabulary-grid">${lesson.vocabulary
+      .map((word) => {
+        const done = state.words.includes(word.id);
+        return `<article class="word-card ${done ? "is-learned" : ""}" data-word-card="${word.id}">
         <div class="word-card-top"><span>${word.partOfSpeech}</span><span>${word.category}</span></div>
         <h4>${word.korean}</h4><p>${word.indonesian}</p><small class="romanization" hidden>${word.romanization}</small>
         <div class="word-actions"><button type="button" class="round-action" data-action="speak" data-text="${escapeAttribute(word.audioText)}" aria-label="Dengarkan kata ${escapeAttribute(word.korean)}">🔊</button><button type="button" class="pronunciation-toggle" data-action="pronunciation">Lihat pelafalan</button></div>
-        <button type="button" class="learn-check ${done ? 'is-active' : ''}" data-action="toggle-word" data-id="${word.id}"><span>${done ? '✓' : '○'}</span>${done ? 'Sudah dipelajari' : 'Tandai sudah belajar'}</button>
+        <button type="button" class="learn-check ${done ? "is-active" : ""}" data-action="toggle-word" data-id="${word.id}"><span>${done ? "✓" : "○"}</span>${done ? "Sudah dipelajari" : "Tandai sudah belajar"}</button>
       </article>`;
-    }).join('')}</div>
+      })
+      .join("")}</div>
     <div class="tab-footer"><span>${state.words.length} dari ${lesson.vocabulary.length} kosakata selesai</span><button type="button" class="button" data-tab="sentences">Lanjut ke Kalimat →</button></div>`;
 }
 
 function renderSentences(lesson) {
   const state = getDayState(lesson.day);
-  document.getElementById('tabContent').innerHTML = `
+  document.getElementById("tabContent").innerHTML = `
     <div class="tab-intro"><div><span>LANGKAH 2</span><h3>Belajar lewat 5 kalimat</h3></div><p>Dengarkan pada kecepatan normal atau pelan. Terjemahan menggunakan bentuk sopan “saya”.</p></div>
-    <div class="sentence-list">${lesson.sentences.map((sentence, index) => {
-      const done = state.sentences.includes(sentence.id);
-      return `<article class="sentence-card ${done ? 'is-learned' : ''}">
-        <span class="sentence-number">${String(index + 1).padStart(2, '0')}</span><div class="sentence-copy"><h4>${sentence.korean}</h4><p>${sentence.indonesian}</p><small class="romanization" hidden>${sentence.romanization}</small>
+    <div class="sentence-list">${lesson.sentences
+      .map((sentence, index) => {
+        const done = state.sentences.includes(sentence.id);
+        return `<article class="sentence-card ${done ? "is-learned" : ""}">
+        <span class="sentence-number">${String(index + 1).padStart(2, "0")}</span><div class="sentence-copy"><h4>${sentence.korean}</h4><p>${sentence.indonesian}</p><small class="romanization" hidden>${sentence.romanization}</small>
         <div class="sentence-actions"><button type="button" data-action="speak" data-text="${escapeAttribute(sentence.audioText)}" class="mini-action">🔊 Normal</button><button type="button" data-action="speak-slow" data-text="${escapeAttribute(sentence.audioText)}" class="mini-action">🐢 Pelan</button><button type="button" data-action="pronunciation" class="pronunciation-toggle">Lihat pelafalan</button></div></div>
-        <button type="button" class="sentence-check ${done ? 'is-active' : ''}" data-action="toggle-sentence" data-id="${sentence.id}" aria-label="Tandai kalimat ${index + 1} sudah dipelajari">${done ? '✓' : '○'}</button>
+        <button type="button" class="sentence-check ${done ? "is-active" : ""}" data-action="toggle-sentence" data-id="${sentence.id}" aria-label="Tandai kalimat ${index + 1} sudah dipelajari">${done ? "✓" : "○"}</button>
       </article>`;
-    }).join('')}</div>
+      })
+      .join("")}</div>
     <div class="tab-footer"><span>${state.sentences.length} dari ${lesson.sentences.length} kalimat selesai</span><button type="button" class="button" data-tab="speaking">Lanjut Berbicara →</button></div>`;
 }
 
 function renderSpeaking(lesson) {
   const sentence = lesson.sentences[speakingIndex];
-  document.getElementById('tabContent').innerHTML = `
+  document.getElementById("tabContent").innerHTML = `
     <div class="tab-intro"><div><span>LANGKAH 3</span><h3>Latihan berbicara</h3></div><p>Dengarkan, tirukan, lalu rekam suaramu. Aplikasi tidak menampilkan skor pelafalan palsu.</p></div>
     <div class="speaking-card">
       <div class="speaking-progress"><span>Kalimat ${speakingIndex + 1} / ${lesson.sentences.length}</span><div><i style="width:${((speakingIndex + 1) / lesson.sentences.length) * 100}%"></i></div></div>
       <span class="speaking-quote">“</span><h3>${sentence.korean}</h3><p>${sentence.indonesian}</p><small>${sentence.romanization}</small>
       <div class="listen-row"><button type="button" class="mini-action" data-action="speak" data-text="${escapeAttribute(sentence.audioText)}">🔊 Dengarkan</button><button type="button" class="mini-action" data-action="speak-slow" data-text="${escapeAttribute(sentence.audioText)}">🐢 Pelan</button></div>
-      <div class="record-panel"><button type="button" class="record-button" data-action="record" aria-label="Mulai atau hentikan rekaman"><span>🎙️</span></button><div><b id="recordStatus">Tekan mikrofon lalu ucapkan kalimat</b><small>Rekaman hanya diproses di perangkatmu.</small></div><button type="button" class="mini-action" data-action="play-recording" ${recordedAudioUrl ? '' : 'disabled'}>▶ Putar ulang</button></div>
-      <div class="speaking-nav"><button type="button" class="button button-ghost" data-action="previous-sentence" ${speakingIndex === 0 ? 'disabled' : ''}>← Sebelumnya</button><button type="button" class="button" data-action="next-sentence">${speakingIndex === lesson.sentences.length - 1 ? 'Mulai Cek Cepat →' : 'Berikutnya →'}</button></div>
+      <div class="record-panel"><button type="button" class="record-button" data-action="record" aria-label="Mulai atau hentikan rekaman"><span>🎙️</span></button><div><b id="recordStatus">Tekan mikrofon lalu ucapkan kalimat</b><small>Rekaman hanya diproses di perangkatmu.</small></div><button type="button" class="mini-action" data-action="play-recording" ${recordedAudioUrl ? "" : "disabled"}>▶ Putar ulang</button></div>
+      <div class="speaking-nav"><button type="button" class="button button-ghost" data-action="previous-sentence" ${speakingIndex === 0 ? "disabled" : ""}>← Sebelumnya</button><button type="button" class="button" data-action="next-sentence">${speakingIndex === lesson.sentences.length - 1 ? "Mulai Cek Cepat →" : "Berikutnya →"}</button></div>
     </div>`;
 }
 
 /* 나중에 SpeechRecognition을 연결할 때 사용할 말하기 비교 함수의 뼈대이다. */
-function startSpeakingPractice(sentenceId) { speakingIndex = Math.max(0, Number(sentenceId)); renderSpeaking(courseData.find(item => item.day === currentDay)); }
-function compareSpokenSentence(targetText, spokenText) { return { targetText, spokenText, supported: false }; }
-function showSpeakingResult() { showToast('Pengenalan ucapan dapat ditambahkan pada versi berikutnya.'); }
+function startSpeakingPractice(sentenceId) {
+  speakingIndex = Math.max(0, Number(sentenceId));
+  renderSpeaking(courseData.find((item) => item.day === currentDay));
+}
+function compareSpokenSentence(targetText, spokenText) {
+  return { targetText, spokenText, supported: false };
+}
+function showSpeakingResult() {
+  showToast("Pengenalan ucapan dapat ditambahkan pada versi berikutnya.");
+}
 
 // MediaRecorder를 지원하면 실제 녹음을 시작한다.
 async function startRecording() {
-  if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) { showToast('Perekaman belum didukung di browser ini.'); return; }
+  if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+    showToast("Perekaman belum didukung di browser ini.");
+    return;
+  }
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    recordedChunks = []; mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.addEventListener('dataavailable', event => { if (event.data.size) recordedChunks.push(event.data); });
-    mediaRecorder.addEventListener('stop', () => {
+    recordedChunks = [];
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.addEventListener("dataavailable", (event) => {
+      if (event.data.size) recordedChunks.push(event.data);
+    });
+    mediaRecorder.addEventListener("stop", () => {
       if (recordedAudioUrl) URL.revokeObjectURL(recordedAudioUrl);
-      recordedAudioUrl = URL.createObjectURL(new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'audio/webm' }));
-      stream.getTracks().forEach(track => track.stop()); renderSpeaking(courseData.find(item => item.day === currentDay)); showToast('Rekaman selesai. Kamu bisa memutarnya kembali.');
+      recordedAudioUrl = URL.createObjectURL(
+        new Blob(recordedChunks, {
+          type: mediaRecorder.mimeType || "audio/webm",
+        }),
+      );
+      stream.getTracks().forEach((track) => track.stop());
+      renderSpeaking(courseData.find((item) => item.day === currentDay));
+      showToast("Rekaman selesai. Kamu bisa memutarnya kembali.");
     });
     mediaRecorder.start();
-    const status = document.getElementById('recordStatus'); if (status) status.textContent = 'Sedang merekam… tekan mikrofon untuk berhenti';
-    document.querySelector('.record-button')?.classList.add('is-recording');
-  } catch (error) { showToast('Izin mikrofon diperlukan untuk merekam suara.'); }
+    const status = document.getElementById("recordStatus");
+    if (status)
+      status.textContent = "Sedang merekam… tekan mikrofon untuk berhenti";
+    document.querySelector(".record-button")?.classList.add("is-recording");
+  } catch (error) {
+    showToast("Izin mikrofon diperlukan untuk merekam suara.");
+  }
 }
-function stopRecording() { if (mediaRecorder?.state === 'recording') mediaRecorder.stop(); }
-function playRecordedAudio() { if (recordedAudioUrl) new Audio(recordedAudioUrl).play().catch(() => showToast('Rekaman belum dapat diputar.')); else showToast('Belum ada rekaman.'); }
+function stopRecording() {
+  if (mediaRecorder?.state === "recording") mediaRecorder.stop();
+}
+function playRecordedAudio() {
+  if (recordedAudioUrl)
+    new Audio(recordedAudioUrl)
+      .play()
+      .catch(() => showToast("Rekaman belum dapat diputar."));
+  else showToast("Belum ada rekaman.");
+}
 
 /* =========================================================
    5. 일반 학습일의 3문제 Cek Cepat
@@ -915,8 +1420,22 @@ function seededWords(pool, count, seed) {
 
 function createAnswerOptions(correctWord, wordPool, field, seed = 1) {
   const correct = correctWord[field];
-  const uniqueWrong = [...new Set(wordPool.filter(word => word.id !== correctWord.id).map(word => word[field]).filter(value => value !== correct))];
-  const options = [correct, ...seededWords(uniqueWrong.map(value => ({ value })), 3, seed).map(item => item.value)];
+  const uniqueWrong = [
+    ...new Set(
+      wordPool
+        .filter((word) => word.id !== correctWord.id)
+        .map((word) => word[field])
+        .filter((value) => value !== correct),
+    ),
+  ];
+  const options = [
+    correct,
+    ...seededWords(
+      uniqueWrong.map((value) => ({ value })),
+      3,
+      seed,
+    ).map((item) => item.value),
+  ];
   const shift = seed % options.length;
   return [...options.slice(shift), ...options.slice(0, shift)];
 }
@@ -924,79 +1443,203 @@ function createAnswerOptions(correctWord, wordPool, field, seed = 1) {
 function createQuickQuestions(lesson) {
   const chosen = seededWords(lesson.vocabulary, 3, lesson.day);
   return [
-    { type: 'A', word: chosen[0], prompt: `Apa arti “${chosen[0].korean}”?`, options: createAnswerOptions(chosen[0], lesson.vocabulary, 'indonesian', lesson.day), answer: chosen[0].indonesian },
-    { type: 'B', word: chosen[1], prompt: `Apa bahasa Korea untuk “${chosen[1].indonesian}”?`, options: createAnswerOptions(chosen[1], lesson.vocabulary, 'korean', lesson.day + 1), answer: chosen[1].korean },
-    { type: 'C', word: chosen[2], prompt: 'Dengarkan audio lalu pilih kata Korea yang benar.', options: createAnswerOptions(chosen[2], lesson.vocabulary, 'korean', lesson.day + 2), answer: chosen[2].korean, audio: true }
+    {
+      type: "A",
+      word: chosen[0],
+      prompt: `Apa arti “${chosen[0].korean}”?`,
+      options: createAnswerOptions(
+        chosen[0],
+        lesson.vocabulary,
+        "indonesian",
+        lesson.day,
+      ),
+      answer: chosen[0].indonesian,
+    },
+    {
+      type: "B",
+      word: chosen[1],
+      prompt: `Apa bahasa Korea untuk “${chosen[1].indonesian}”?`,
+      options: createAnswerOptions(
+        chosen[1],
+        lesson.vocabulary,
+        "korean",
+        lesson.day + 1,
+      ),
+      answer: chosen[1].korean,
+    },
+    {
+      type: "C",
+      word: chosen[2],
+      prompt: "Dengarkan audio lalu pilih kata Korea yang benar.",
+      options: createAnswerOptions(
+        chosen[2],
+        lesson.vocabulary,
+        "korean",
+        lesson.day + 2,
+      ),
+      answer: chosen[2].korean,
+      audio: true,
+    },
   ];
 }
 
 function renderQuickCheck(lesson, reset = false) {
   const state = getDayState(lesson.day);
-  if (reset) { state.checkAnswers = []; state.checkScore = 0; state.completed = false; saveProgress(); }
-  if (!quizRuntime || quizRuntime.kind !== 'quick') quizRuntime = { kind: 'quick', questions: createQuickQuestions(lesson), index: Math.min(state.checkAnswers.length, 2), answered: null };
-  if (state.checkAnswers.length >= quizRuntime.questions.length) { showQuickResult(lesson); return; }
-  renderQuizQuestion(lesson, quizRuntime.questions[quizRuntime.index], quizRuntime.index, quizRuntime.questions.length, false);
+  if (reset) {
+    state.checkAnswers = [];
+    state.checkScore = 0;
+    state.completed = false;
+    saveProgress();
+  }
+  if (!quizRuntime || quizRuntime.kind !== "quick")
+    quizRuntime = {
+      kind: "quick",
+      questions: createQuickQuestions(lesson),
+      index: Math.min(state.checkAnswers.length, 2),
+      answered: null,
+    };
+  if (state.checkAnswers.length >= quizRuntime.questions.length) {
+    showQuickResult(lesson);
+    return;
+  }
+  renderQuizQuestion(
+    lesson,
+    quizRuntime.questions[quizRuntime.index],
+    quizRuntime.index,
+    quizRuntime.questions.length,
+    false,
+  );
 }
 
 function showQuickResult(lesson) {
   const state = getDayState(lesson.day);
-  document.getElementById('tabContent').innerHTML = `<div class="result-card"><span class="result-icon">🎉</span><p class="eyebrow">CEK CEPAT SELESAI</p><h3>${state.checkScore} / 3 benar</h3><p>${state.checkScore === 3 ? 'Bagus! Semua jawabanmu benar.' : 'Kerja bagus. Ulangi kosakata yang masih membingungkan.'}</p><div class="result-actions"><button type="button" class="button button-ghost" data-action="restart-quick">Ulangi kuis</button><button type="button" class="button" data-action="complete-lesson">Selesaikan Day ${lesson.day}</button></div></div>`;
+  document.getElementById("tabContent").innerHTML =
+    `<div class="result-card"><span class="result-icon">🎉</span><p class="eyebrow">CEK CEPAT SELESAI</p><h3>${state.checkScore} / 3 benar</h3><p>${state.checkScore === 3 ? "Bagus! Semua jawabanmu benar." : "Kerja bagus. Ulangi kosakata yang masih membingungkan."}</p><div class="result-actions"><button type="button" class="button button-ghost" data-action="restart-quick">Ulangi kuis</button><button type="button" class="button" data-action="complete-lesson">Selesaikan Day ${lesson.day}</button></div></div>`;
 }
 
 /* =========================================================
    6. 복습일의 15문제와 결과
 ========================================================= */
-function getReviewWords(days) { return courseData.filter(item => days.includes(item.day) && item.type === 'lesson').flatMap(item => item.vocabulary); }
+function getReviewWords(days) {
+  return courseData
+    .filter((item) => days.includes(item.day) && item.type === "lesson")
+    .flatMap((item) => item.vocabulary);
+}
 
 function makeReviewQuestion(word, type, pool, seed) {
-  if (type === 'A') return { type, word, wordId: word.id, prompt: `Apa arti “${word.korean}”?`, options: createAnswerOptions(word, pool, 'indonesian', seed), answer: word.indonesian };
-  if (type === 'B') return { type, word, wordId: word.id, prompt: `Apa bahasa Korea untuk “${word.indonesian}”?`, options: createAnswerOptions(word, pool, 'korean', seed), answer: word.korean };
-  return { type, word, wordId: word.id, prompt: 'Dengarkan audio lalu pilih kata Korea yang benar.', options: createAnswerOptions(word, pool, 'korean', seed), answer: word.korean, audio: true };
+  if (type === "A")
+    return {
+      type,
+      word,
+      wordId: word.id,
+      prompt: `Apa arti “${word.korean}”?`,
+      options: createAnswerOptions(word, pool, "indonesian", seed),
+      answer: word.indonesian,
+    };
+  if (type === "B")
+    return {
+      type,
+      word,
+      wordId: word.id,
+      prompt: `Apa bahasa Korea untuk “${word.indonesian}”?`,
+      options: createAnswerOptions(word, pool, "korean", seed),
+      answer: word.korean,
+    };
+  return {
+    type,
+    word,
+    wordId: word.id,
+    prompt: "Dengarkan audio lalu pilih kata Korea yang benar.",
+    options: createAnswerOptions(word, pool, "korean", seed),
+    answer: word.korean,
+    audio: true,
+  };
 }
 
 function createReviewQuestions(days) {
   const pool = getReviewWords(days);
-  return ['A','B','C'].flatMap((type, typeIndex) => seededWords(pool, 5, days[0] + typeIndex * 9).map((word, index) => makeReviewQuestion(word, type, pool, days[0] + typeIndex * 10 + index)));
+  return ["A", "B", "C"].flatMap((type, typeIndex) =>
+    seededWords(pool, 5, days[0] + typeIndex * 9).map((word, index) =>
+      makeReviewQuestion(word, type, pool, days[0] + typeIndex * 10 + index),
+    ),
+  );
 }
 
 function renderReviewIntro(lesson) {
   const state = getDayState(lesson.day);
-  if (state.completed) { showReviewResult(lesson); return; }
-  document.getElementById('tabContent').innerHTML = `<div class="review-start"><span class="review-big-icon">📝</span><p class="eyebrow">REVIEW DAY ${lesson.day}</p><h3>Siap menguji ingatanmu?</h3><p>Kerjakan 15 soal dari Day ${lesson.reviewDays[0]}–${lesson.reviewDays[3]}. Soal tampil satu per satu dan terdiri dari tiga tipe.</p><div class="review-types"><span><b>A</b>Korea → Indonesia</span><span><b>B</b>Indonesia → Korea</span><span><b>C</b>Dengar → Korea</span></div><button type="button" class="button button-coral" data-action="start-review">Mulai 15 Soal →</button></div>`;
+  if (state.completed) {
+    showReviewResult(lesson);
+    return;
+  }
+  document.getElementById("tabContent").innerHTML =
+    `<div class="review-start"><span class="review-big-icon">📝</span><p class="eyebrow">REVIEW DAY ${lesson.day}</p><h3>Siap menguji ingatanmu?</h3><p>Kerjakan 15 soal dari Day ${lesson.reviewDays[0]}–${lesson.reviewDays[3]}. Soal tampil satu per satu dan terdiri dari tiga tipe.</p><div class="review-types"><span><b>A</b>Korea → Indonesia</span><span><b>B</b>Indonesia → Korea</span><span><b>C</b>Dengar → Korea</span></div><button type="button" class="button button-coral" data-action="start-review">Mulai 15 Soal →</button></div>`;
 }
 
 function startReview(lesson, wrongOnly = false) {
   const state = getDayState(lesson.day);
   let questions = createReviewQuestions(lesson.reviewDays);
   if (wrongOnly) {
-    questions = state.wrongAnswers.map((wrong, index) => {
-      const pool = getReviewWords(lesson.reviewDays); const word = pool.find(item => item.id === wrong.wordId);
-      return makeReviewQuestion(word, wrong.type, pool, lesson.day + index + 50);
-    }).filter(Boolean);
+    questions = state.wrongAnswers
+      .map((wrong, index) => {
+        const pool = getReviewWords(lesson.reviewDays);
+        const word = pool.find((item) => item.id === wrong.wordId);
+        return makeReviewQuestion(
+          word,
+          wrong.type,
+          pool,
+          lesson.day + index + 50,
+        );
+      })
+      .filter(Boolean);
   } else {
-    state.answers = []; state.wrongAnswers = []; state.typeScores = { A: 0, B: 0, C: 0 }; state.score = 0; state.completed = false; saveProgress();
+    state.answers = [];
+    state.wrongAnswers = [];
+    state.typeScores = { A: 0, B: 0, C: 0 };
+    state.score = 0;
+    state.completed = false;
+    saveProgress();
   }
-  quizRuntime = { kind: 'review', questions, index: 0, answered: null, retryMode: wrongOnly };
-  if (!questions.length) { showToast('Tidak ada soal yang perlu diulang.'); showReviewResult(lesson); return; }
+  quizRuntime = {
+    kind: "review",
+    questions,
+    index: 0,
+    answered: null,
+    retryMode: wrongOnly,
+  };
+  if (!questions.length) {
+    showToast("Tidak ada soal yang perlu diulang.");
+    showReviewResult(lesson);
+    return;
+  }
   renderReviewQuestion();
 }
 
 function renderReviewQuestion() {
-  const lesson = courseData.find(item => item.day === currentDay);
+  const lesson = courseData.find((item) => item.day === currentDay);
   const question = quizRuntime.questions[quizRuntime.index];
-  renderQuizQuestion(lesson, question, quizRuntime.index, quizRuntime.questions.length, true);
+  renderQuizQuestion(
+    lesson,
+    question,
+    quizRuntime.index,
+    quizRuntime.questions.length,
+    true,
+  );
 }
 
 function renderQuizQuestion(lesson, question, index, total, isReview) {
-  const typeText = { A: 'Korea → Indonesia', B: 'Indonesia → Korea', C: 'Dengar → Korea' }[question.type];
-  document.getElementById('tabContent').innerHTML = `<div class="quiz-card">
-    <div class="quiz-head"><div><span>${isReview ? `REVIEW DAY ${lesson.day}` : 'CEK CEPAT'}</span><b>Soal ${index + 1} / ${total}</b></div><span class="quiz-type">Tipe ${question.type} · ${typeText}</span></div>
+  const typeText = {
+    A: "Korea → Indonesia",
+    B: "Indonesia → Korea",
+    C: "Dengar → Korea",
+  }[question.type];
+  document.getElementById("tabContent").innerHTML = `<div class="quiz-card">
+    <div class="quiz-head"><div><span>${isReview ? `REVIEW DAY ${lesson.day}` : "CEK CEPAT"}</span><b>Soal ${index + 1} / ${total}</b></div><span class="quiz-type">Tipe ${question.type} · ${typeText}</span></div>
     <div class="quiz-progress"><i style="width:${((index + 1) / total) * 100}%"></i></div>
-    ${question.audio ? `<button type="button" class="audio-question" data-action="speak" data-text="${escapeAttribute(question.word.audioText)}" aria-label="Dengarkan kata Korea">🔊 <span>Dengarkan audio</span></button>` : ''}
+    ${question.audio ? `<button type="button" class="audio-question" data-action="speak" data-text="${escapeAttribute(question.word.audioText)}" aria-label="Dengarkan kata Korea">🔊 <span>Dengarkan audio</span></button>` : ""}
     <h3>${question.prompt}</h3>
-    <div class="answer-grid">${question.options.map((option, optionIndex) => `<button type="button" data-action="answer" data-value="${escapeAttribute(option)}"><span>${String.fromCharCode(65 + optionIndex)}</span>${option}</button>`).join('')}</div>
+    <div class="answer-grid">${question.options.map((option, optionIndex) => `<button type="button" data-action="answer" data-value="${escapeAttribute(option)}"><span>${String.fromCharCode(65 + optionIndex)}</span>${option}</button>`).join("")}</div>
     <div id="answerFeedback" class="answer-feedback" aria-live="polite"></div>
-    <button type="button" class="button quiz-next" data-action="next-question" disabled>${index === total - 1 ? 'Lihat hasil' : 'Soal berikutnya →'}</button>
+    <button type="button" class="button quiz-next" data-action="next-question" disabled>${index === total - 1 ? "Lihat hasil" : "Soal berikutnya →"}</button>
   </div>`;
 }
 
@@ -1005,45 +1648,74 @@ function checkQuizAnswer(selectedValue) {
   const question = quizRuntime.questions[quizRuntime.index];
   const correct = selectedValue === question.answer;
   quizRuntime.answered = { correct, selectedValue };
-  document.querySelectorAll('.answer-grid button').forEach(button => {
+  document.querySelectorAll(".answer-grid button").forEach((button) => {
     button.disabled = true;
-    if (button.dataset.value === question.answer) button.classList.add('is-correct');
-    else if (button.dataset.value === selectedValue) button.classList.add('is-wrong');
+    if (button.dataset.value === question.answer)
+      button.classList.add("is-correct");
+    else if (button.dataset.value === selectedValue)
+      button.classList.add("is-wrong");
   });
-  const feedback = document.getElementById('answerFeedback');
-  feedback.className = `answer-feedback show ${correct ? 'correct' : 'wrong'}`;
-  feedback.innerHTML = correct ? `<b>✓ Jawaban benar! 🎉</b><span>${question.word.korean} = ${question.word.indonesian}</span>` : `<b>✕ Belum tepat.</b><span>Jawaban yang benar: “${question.answer}”. <button type="button" data-action="speak" data-text="${escapeAttribute(question.word.audioText)}" aria-label="Dengarkan jawaban benar">🔊 ${question.word.korean}</button></span>`;
-  document.querySelector('.quiz-next').disabled = false;
+  const feedback = document.getElementById("answerFeedback");
+  feedback.className = `answer-feedback show ${correct ? "correct" : "wrong"}`;
+  feedback.innerHTML = correct
+    ? `<b>✓ Jawaban benar! 🎉</b><span>${question.word.korean} = ${question.word.indonesian}</span>`
+    : `<b>✕ Belum tepat.</b><span>Jawaban yang benar: “${question.answer}”. <button type="button" data-action="speak" data-text="${escapeAttribute(question.word.audioText)}" aria-label="Dengarkan jawaban benar">🔊 ${question.word.korean}</button></span>`;
+  document.querySelector(".quiz-next").disabled = false;
 }
 
-function checkReviewAnswer(selectedValue) { checkQuizAnswer(selectedValue); }
+function checkReviewAnswer(selectedValue) {
+  checkQuizAnswer(selectedValue);
+}
 
 function nextQuizQuestion() {
   if (!quizRuntime?.answered) return;
-  const lesson = courseData.find(item => item.day === currentDay);
+  const lesson = courseData.find((item) => item.day === currentDay);
   const question = quizRuntime.questions[quizRuntime.index];
-  if (quizRuntime.kind === 'quick') {
+  if (quizRuntime.kind === "quick") {
     const state = getDayState(lesson.day);
-    state.checkAnswers.push({ type: question.type, wordId: question.word.id, correct: quizRuntime.answered.correct });
+    state.checkAnswers.push({
+      type: question.type,
+      wordId: question.word.id,
+      correct: quizRuntime.answered.correct,
+    });
     if (quizRuntime.answered.correct) state.checkScore += 1;
     saveProgress();
   } else if (!quizRuntime.retryMode) {
     const state = getDayState(lesson.day);
-    state.answers.push({ type: question.type, wordId: question.wordId, correct: quizRuntime.answered.correct });
-    if (quizRuntime.answered.correct) { state.score += 1; state.typeScores[question.type] += 1; }
-    else state.wrongAnswers.push({ type: question.type, wordId: question.wordId });
+    state.answers.push({
+      type: question.type,
+      wordId: question.wordId,
+      correct: quizRuntime.answered.correct,
+    });
+    if (quizRuntime.answered.correct) {
+      state.score += 1;
+      state.typeScores[question.type] += 1;
+    } else
+      state.wrongAnswers.push({ type: question.type, wordId: question.wordId });
     saveProgress();
   } else if (quizRuntime.answered.correct) {
     const state = getDayState(lesson.day);
-    state.wrongAnswers = state.wrongAnswers.filter(item => !(item.type === question.type && item.wordId === question.wordId));
+    state.wrongAnswers = state.wrongAnswers.filter(
+      (item) =>
+        !(item.type === question.type && item.wordId === question.wordId),
+    );
     saveProgress();
   }
-  quizRuntime.index += 1; quizRuntime.answered = null;
+  quizRuntime.index += 1;
+  quizRuntime.answered = null;
   if (quizRuntime.index >= quizRuntime.questions.length) {
-    if (quizRuntime.kind === 'quick') showQuickResult(lesson);
-    else { if (!quizRuntime.retryMode) { getDayState(lesson.day).completed = true; saveProgress(); } showReviewResult(lesson, quizRuntime.retryMode); }
+    if (quizRuntime.kind === "quick") showQuickResult(lesson);
+    else {
+      if (!quizRuntime.retryMode) {
+        getDayState(lesson.day).completed = true;
+        saveProgress();
+      }
+      showReviewResult(lesson, quizRuntime.retryMode);
+    }
   } else {
-    quizRuntime.kind === 'quick' ? renderQuickCheck(lesson) : renderReviewQuestion();
+    quizRuntime.kind === "quick"
+      ? renderQuickCheck(lesson)
+      : renderReviewQuestion();
   }
 }
 
@@ -1051,91 +1723,186 @@ function showReviewResult(lesson, retryFinished = false) {
   const state = getDayState(lesson.day);
   const percent = Math.round((state.score / 15) * 100);
   const pool = getReviewWords(lesson.reviewDays);
-  const wrongWords = state.wrongAnswers.map(item => pool.find(word => word.id === item.wordId)).filter(Boolean);
-  document.getElementById('tabContent').innerHTML = `<div class="result-card review-result">
-    <span class="result-icon">${lesson.day === 40 ? '🏆' : '🎉'}</span><p class="eyebrow">${retryFinished ? 'LATIHAN ULANG SELESAI' : 'REVIEW SELESAI'}</p>
-    <h3>${lesson.day === 40 ? 'Program 40 hari selesai!' : 'Review selesai!'}</h3>
-    ${lesson.day === 40 ? '<p class="final-copy">400 kosakata telah dipelajari.</p>' : ''}
+  const wrongWords = state.wrongAnswers
+    .map((item) => pool.find((word) => word.id === item.wordId))
+    .filter(Boolean);
+  document.getElementById("tabContent").innerHTML =
+    `<div class="result-card review-result">
+    <span class="result-icon">${lesson.day === 40 ? "🏆" : "🎉"}</span><p class="eyebrow">${retryFinished ? "LATIHAN ULANG SELESAI" : "REVIEW SELESAI"}</p>
+    <h3>${lesson.day === 40 ? "Program 40 hari selesai!" : "Review selesai!"}</h3>
+    ${lesson.day === 40 ? '<p class="final-copy">400 kosakata telah dipelajari.</p>' : ""}
     <div class="score-circle"><strong>${state.score}<small>/15</small></strong><span>${percent}% benar</span></div>
     <div class="type-scores"><span><b>Tipe A</b>${state.typeScores.A} / 5</span><span><b>Tipe B</b>${state.typeScores.B} / 5</span><span><b>Tipe C</b>${state.typeScores.C} / 5</span></div>
-    <div class="wrong-words"><h4>Kosakata yang perlu dipelajari lagi</h4>${wrongWords.length ? `<div>${wrongWords.map(word => `<span><b>${word.korean}</b> — ${word.indonesian} <button type="button" data-action="speak" data-text="${escapeAttribute(word.audioText)}" aria-label="Dengarkan ${escapeAttribute(word.korean)}">🔊</button></span>`).join('')}</div>` : '<p>Hebat! Tidak ada kosakata yang salah.</p>'}</div>
-    <div class="result-actions">${wrongWords.length ? '<button type="button" class="button button-ghost" data-action="retry-wrong">Ulangi soal yang salah</button>' : ''}<button type="button" class="button" data-action="finish-review">Selesaikan review</button>${lesson.day === 40 ? '<button type="button" class="button button-coral" data-action="final-exam">Ujian Akhir 400 Kosakata</button>' : ''}</div>
+    <div class="wrong-words"><h4>Kosakata yang perlu dipelajari lagi</h4>${wrongWords.length ? `<div>${wrongWords.map((word) => `<span><b>${word.korean}</b> — ${word.indonesian} <button type="button" data-action="speak" data-text="${escapeAttribute(word.audioText)}" aria-label="Dengarkan ${escapeAttribute(word.korean)}">🔊</button></span>`).join("")}</div>` : "<p>Hebat! Tidak ada kosakata yang salah.</p>"}</div>
+    <div class="result-actions">${wrongWords.length ? '<button type="button" class="button button-ghost" data-action="retry-wrong">Ulangi soal yang salah</button>' : ""}<button type="button" class="button" data-action="finish-review">Selesaikan review</button>${lesson.day === 40 ? '<button type="button" class="button button-coral" data-action="final-exam">Ujian Akhir 400 Kosakata</button>' : ""}</div>
   </div>`;
 }
 
-function retryWrongQuestions() { startReview(courseData.find(item => item.day === currentDay), true); }
-function startFinalExam() { showToast('Ujian akhir 400 kosakata akan ditambahkan pada versi berikutnya.'); }
+function retryWrongQuestions() {
+  startReview(
+    courseData.find((item) => item.day === currentDay),
+    true,
+  );
+}
+function startFinalExam() {
+  showToast("Ujian akhir 400 kosakata akan ditambahkan pada versi berikutnya.");
+}
 
 /* =========================================================
    7. 버튼 이벤트와 진행률 갱신
 ========================================================= */
 function toggleArrayItem(array, value) {
-  const index = array.indexOf(value); if (index >= 0) array.splice(index, 1); else array.push(value);
+  const index = array.indexOf(value);
+  if (index >= 0) array.splice(index, 1);
+  else array.push(value);
 }
 
-function escapeAttribute(value) { return String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function escapeAttribute(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
 
-document.addEventListener('click', event => {
-  const dayButton = event.target.closest('[data-day]');
-  if (dayButton) { openDay(Number(dayButton.dataset.day)); return; }
-  const tabButton = event.target.closest('[data-tab]');
-  if (tabButton) { activeTab = tabButton.dataset.tab; quizRuntime = null; renderLearningDay(); return; }
-  const actionButton = event.target.closest('[data-action]');
+document.addEventListener("click", (event) => {
+  const dayButton = event.target.closest("[data-day]");
+  if (dayButton) {
+    openDay(Number(dayButton.dataset.day));
+    return;
+  }
+  const tabButton = event.target.closest("[data-tab]");
+  if (tabButton) {
+    activeTab = tabButton.dataset.tab;
+    quizRuntime = null;
+    renderLearningDay();
+    return;
+  }
+  const actionButton = event.target.closest("[data-action]");
   if (!actionButton) return;
   const action = actionButton.dataset.action;
-  if (action === 'speak') speakKorean(actionButton.dataset.text);
-  if (action === 'speak-slow') speakKorean(actionButton.dataset.text, 0.65);
-  if (action === 'pronunciation') {
-    const card = actionButton.closest('.word-card, .sentence-card'); const romanization = card.querySelector('.romanization'); romanization.hidden = !romanization.hidden; actionButton.textContent = romanization.hidden ? 'Lihat pelafalan' : 'Sembunyikan pelafalan';
+  if (action === "speak") speakKorean(actionButton.dataset.text);
+  if (action === "speak-slow") speakKorean(actionButton.dataset.text, 0.65);
+  if (action === "pronunciation") {
+    const card = actionButton.closest(".word-card, .sentence-card");
+    const romanization = card.querySelector(".romanization");
+    romanization.hidden = !romanization.hidden;
+    actionButton.textContent = romanization.hidden
+      ? "Lihat pelafalan"
+      : "Sembunyikan pelafalan";
   }
-  if (action === 'toggle-word') {
-    const state = getDayState(currentDay); toggleArrayItem(state.words, Number(actionButton.dataset.id)); saveProgress(); renderLearningDay();
+  if (action === "toggle-word") {
+    const state = getDayState(currentDay);
+    toggleArrayItem(state.words, Number(actionButton.dataset.id));
+    saveProgress();
+    renderLearningDay();
   }
-  if (action === 'toggle-sentence') {
-    const state = getDayState(currentDay); toggleArrayItem(state.sentences, actionButton.dataset.id); saveProgress(); renderLearningDay();
+  if (action === "toggle-sentence") {
+    const state = getDayState(currentDay);
+    toggleArrayItem(state.sentences, actionButton.dataset.id);
+    saveProgress();
+    renderLearningDay();
   }
-  if (action === 'record') mediaRecorder?.state === 'recording' ? stopRecording() : startRecording();
-  if (action === 'play-recording') playRecordedAudio();
-  if (action === 'previous-sentence') { speakingIndex = Math.max(0, speakingIndex - 1); renderSpeaking(courseData.find(item => item.day === currentDay)); }
-  if (action === 'next-sentence') { const lesson = courseData.find(item => item.day === currentDay); if (speakingIndex < lesson.sentences.length - 1) { speakingIndex += 1; renderSpeaking(lesson); } else { activeTab = 'quick'; quizRuntime = null; renderLearningDay(); } }
-  if (action === 'answer') checkQuizAnswer(actionButton.dataset.value);
-  if (action === 'next-question') nextQuizQuestion();
-  if (action === 'restart-quick') { quizRuntime = null; renderQuickCheck(courseData.find(item => item.day === currentDay), true); }
-  if (action === 'complete-lesson') { getDayState(currentDay).completed = true; saveProgress(); showToast(`Day ${currentDay} selesai!`); renderLearningDay(); }
-  if (action === 'start-review') startReview(courseData.find(item => item.day === currentDay));
-  if (action === 'retry-wrong') retryWrongQuestions();
-  if (action === 'finish-review') { getDayState(currentDay).completed = true; saveProgress(); showToast(`Review Day ${currentDay} selesai!`); renderLearningDay(); }
-  if (action === 'final-exam') startFinalExam();
+  if (action === "record")
+    mediaRecorder?.state === "recording" ? stopRecording() : startRecording();
+  if (action === "play-recording") playRecordedAudio();
+  if (action === "previous-sentence") {
+    speakingIndex = Math.max(0, speakingIndex - 1);
+    renderSpeaking(courseData.find((item) => item.day === currentDay));
+  }
+  if (action === "next-sentence") {
+    const lesson = courseData.find((item) => item.day === currentDay);
+    if (speakingIndex < lesson.sentences.length - 1) {
+      speakingIndex += 1;
+      renderSpeaking(lesson);
+    } else {
+      activeTab = "quick";
+      quizRuntime = null;
+      renderLearningDay();
+    }
+  }
+  if (action === "answer") checkQuizAnswer(actionButton.dataset.value);
+  if (action === "next-question") nextQuizQuestion();
+  if (action === "restart-quick") {
+    quizRuntime = null;
+    renderQuickCheck(
+      courseData.find((item) => item.day === currentDay),
+      true,
+    );
+  }
+  if (action === "complete-lesson") {
+    getDayState(currentDay).completed = true;
+    saveProgress();
+    showToast(`Day ${currentDay} selesai!`);
+    renderLearningDay();
+  }
+  if (action === "start-review")
+    startReview(courseData.find((item) => item.day === currentDay));
+  if (action === "retry-wrong") retryWrongQuestions();
+  if (action === "finish-review") {
+    getDayState(currentDay).completed = true;
+    saveProgress();
+    showToast(`Review Day ${currentDay} selesai!`);
+    renderLearningDay();
+  }
+  if (action === "final-exam") startFinalExam();
 });
 
-document.querySelectorAll('.start-day-one').forEach(button => button.addEventListener('click', () => openDay(1)));
-document.getElementById('openFirstReview').addEventListener('click', () => openDay(5));
+document
+  .querySelectorAll(".start-day-one")
+  .forEach((button) => button.addEventListener("click", () => openDay(1)));
+document
+  .getElementById("openFirstReview")
+  .addEventListener("click", () => openDay(5));
 
 // 정적인 영역이 스크롤 안으로 들어오면 부드럽게 나타난다.
-const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }), { threshold: 0.1 }) : null;
-document.querySelectorAll('.reveal').forEach(element => observer ? observer.observe(element) : element.classList.add('visible'));
+const observer =
+  "IntersectionObserver" in window
+    ? new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("visible");
+          }),
+        { threshold: 0.1 },
+      )
+    : null;
+document
+  .querySelectorAll(".reveal")
+  .forEach((element) =>
+    observer ? observer.observe(element) : element.classList.add("visible"),
+  );
 
 /* =========================================================
    8. 데이터 자동 검증
    개발자 도구 콘솔에서 전체 데이터 개수를 즉시 확인할 수 있다.
 ========================================================= */
 function validateCourseData() {
-  const lessonDays = courseData.filter(item => item.type === 'lesson');
-  const reviews = courseData.filter(item => item.type === 'review');
-  const vocabularyCount = lessonDays.reduce((sum, item) => sum + item.vocabulary.length, 0);
+  const lessonDays = courseData.filter((item) => item.type === "lesson");
+  const reviews = courseData.filter((item) => item.type === "review");
+  const vocabularyCount = lessonDays.reduce(
+    (sum, item) => sum + item.vocabulary.length,
+    0,
+  );
   const errors = [];
-  if (courseData.length !== 40) errors.push('Day 개수가 40개가 아닙니다.');
-  if (lessonDays.length !== 32) errors.push('학습일이 32개가 아닙니다.');
-  if (reviews.length !== 8) errors.push('복습일이 8개가 아닙니다.');
-  if (vocabularyCount !== 400) errors.push(`전체 단어가 ${vocabularyCount}개입니다.`);
-  lessonDays.forEach(item => {
+  if (courseData.length !== 40) errors.push("Day 개수가 40개가 아닙니다.");
+  if (lessonDays.length !== 32) errors.push("학습일이 32개가 아닙니다.");
+  if (reviews.length !== 8) errors.push("복습일이 8개가 아닙니다.");
+  if (vocabularyCount !== 400)
+    errors.push(`전체 단어가 ${vocabularyCount}개입니다.`);
+  lessonDays.forEach((item) => {
     const expected = item.day <= 20 ? 10 : 15;
-    if (item.vocabulary.length !== expected) errors.push(`Day ${item.day} 단어 수 오류`);
-    if (item.sentences.length !== 5) errors.push(`Day ${item.day} 예문 수 오류`);
+    if (item.vocabulary.length !== expected)
+      errors.push(`Day ${item.day} 단어 수 오류`);
+    if (item.sentences.length !== 5)
+      errors.push(`Day ${item.day} 예문 수 오류`);
   });
-  reviews.forEach(item => { if (!REVIEW_DAYS.has(item.day)) errors.push(`Day ${item.day} 복습일 오류`); });
-  console.info(`[Hanguk Step] 검증 완료: ${courseData.length} Days · ${lessonDays.length} lessons · ${reviews.length} reviews · ${vocabularyCount} words`);
-  if (errors.length) console.error('[Hanguk Step] 데이터 오류:', errors);
+  reviews.forEach((item) => {
+    if (!REVIEW_DAYS.has(item.day)) errors.push(`Day ${item.day} 복습일 오류`);
+  });
+  console.info(
+    `[Hanguk Step] 검증 완료: ${courseData.length} Days · ${lessonDays.length} lessons · ${reviews.length} reviews · ${vocabularyCount} words`,
+  );
+  if (errors.length) console.error("[Hanguk Step] 데이터 오류:", errors);
   return { valid: errors.length === 0, errors, vocabularyCount };
 }
 
